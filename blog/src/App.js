@@ -28,7 +28,9 @@ function App() {
       <button onClick = { () => {
         let copy = [...글제목]; // let copy = 글제목이 안되는 이유 : state변경 함수는 ()안에 넣은 것으로 바꿔주는데 기존state == 신규state은 변경되지 않는다.
         copy[0] = '여자코트 추천';
-        글제목변경(copy);}}> 글제목 수정 </button>
+        글제목변경(copy);}}> 글제목 수정 </button><input onChange={(e)=>{
+          입력값변경(e.target.value);
+          console.log(입력값)}}></input>
       {/* 글제목 수정을 클릭하면 여자코트 추천으로 글제목이 변경된다 */}
       <div className="list">
         <h4>{ 글제목[0] } <span onClick={ () => { 좋아요변경(좋아요+1)}}>🩷</span> {좋아요} </h4>
@@ -69,40 +71,53 @@ function App() {
         글제목.map(function (a, i) {
           return (
             <div className="list" key={i}>
-              <h4 onClick={()=>{setModal(true); setTitle(i)}}>{글제목[i]}
+              <h4 onClick={()=>{setModal(true); setTitle(i)}}>{글제목[i]} {/*105번째 줄에서 시행한거를 for문을 돌려서 */}
                 <span onClick={() => {좋아요변경(좋아요+1)
                 }}>🩷</span>{좋아요}</h4>
               <p>2월 17일 발행</p>
               <button onClick={()=> {
                 let copy = [...글제목];
-                copy.splice(i,1);
+                copy.splice(i,1); //배열에서 데이터 삭제하는 문법
                 글제목변경(copy);
                 }}>삭제</button>
             </div>
           );
         })
       }
-      
+      {/* 글발행 누르면 글이 추가되는 기능 */}
       <input onChange={(e)=>{
         입력값변경(e.target.value);
         console.log(입력값)}}></input>
       <button onClick={()=> {
         let copy = [...글제목];
-        copy.unshift(입력값);
-        글제목변경(copy);
-      }}>글발행</button>
+        // {
+        //   입력값.includes('여자') ? 글제목변경(입력값 + '👩🏻') : 글제목변경(입력값 + '🩷')
+        // }
+        copy.unshift(입력값); //배열에서 데이터 추가하는 문법
 
+      }}>글발행</button>
+      
+      {/* 스스로과제 */}
+      <input onChange={(e)=>{
+        입력값변경(e.target.value);
+        console.log(입력값)}}></input>  
+      <button onClick={()=> {
+        let copy = [...글제목];
+        copy.shift();
+        copy.unshift(입력값); //배열에서 데이터 추가하는 문법
+        글제목변경(copy);
+      }}>글제목 수정</button>
       {
         modal == true ? <Modal title={title} 글제목={글제목} 글제목변경={글제목변경}/> : null
       }
     </div>
   );
 }
-
+//props : 부모의 것을 가져다 쓰기 위해서!
 function Modal(props) {
   return (
     <div className="modal" style={{background : props.color}}>
-      <h4>{props.글제목[props.title]}</h4>
+      <h4>{props.글제목[props.title]}</h4> {/*부모의 state를 가져와서 모달창에 띄우는 역할 */}
       <p>날짜</p>
       <p>상세내용</p>
       <button onClick={()=> {props.글제목변경(['여자코트 추천', '강남 우동맛집', '파이썬독학'])}}>글수정 </button>
