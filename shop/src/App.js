@@ -6,31 +6,27 @@ import { Button, Navbar, Container, Nav } from 'react-bootstrap'
 import bg from './img/bg.png'
 import data from './data.js';
 import { Routes, Route, Link, HashRouter, useNavigate, Outlet} from 'react-router-dom'
+import Detail from './Detail.js';
 
 function App() {
 
-  let [shoes] = useState(data)
+  let [shoes, setShoes] = useState(data)
   let navigate = useNavigate();
 
   return (
     <div className="App">
-    <HashRouter>
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="#home">Shop</Navbar.Brand>
           <Nav className="me-auto">
             {/* <Link to="/" style={{textDecoration:"none", marginLeft:20}}>홈</Link>
             <Link to="/detail" style={{textDecoration:"none", marginLeft:40}}>상세페이지</Link> */}
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link onClick={()=>{}}>Cart</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail')}}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
-
-
-
-
-        <Routes>
+      <Routes>
           <Route path="/" element={
             <>
               <div className="main-bg"></div>
@@ -43,30 +39,43 @@ function App() {
               </div>
             </>
           }/>
-          <Route path="/detail" element={<div><Detail></Detail></div>}/>
-        </Routes>
-      </HashRouter>
+          
+          <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+        {/* 404 페이지 */}
+        <Route path="*" element={<div>없는 페이지요</div>} />
+
+        <Route path="/about" element={<About />}>
+          <Route path="member" element={<div>멤버임</div>} /> {/* 어디에 보여줄지 정하기 위해 <Outlet></Outlet>사용 */}
+          <Route path="location" element={<div>위치정보임</div>} />
+        </Route>
+
+        <Route path="/event" element={<Event />}>
+          <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>} />
+          <Route path="two" element={<p>생일기념 쿠폰받기</p>} />
+        </Route>
+      </Routes>
     </div>
   );
 }
-
-function Detail() {
-  return (
-  <div className="container">
-    <div className="row">
-    <div className="col-md-6">
-      <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+function Event(){
+  return(
+    <div>
+      <h4>오늘의 이벤트</h4>
+      <Outlet></Outlet>
     </div>
-    <div className="col-md-6">
-      <h4 className="pt-5">상품명</h4>
-      <p>상품설명</p>
-      <p>120000원</p>
-      <button className="btn btn-danger">주문하기</button> 
-    </div>
-    </div>
-  </div>
   )
 }
+
+function About(){
+  return(
+    <div>
+      <h4>회사정보임</h4>
+      <Outlet></Outlet>
+    </div>
+  )
+}
+
+
 
 function Card (props) {
   return(
