@@ -1,6 +1,12 @@
 .App {
   text-align: center;
 }
+.main-image {
+  background-image: url('./img/한교동.jpeg');
+  height: 800px;
+  background-size:cover;
+  background-position: center;
+}
 
 div {
   box-sizing: border-box;
