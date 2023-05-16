@@ -8,6 +8,7 @@ import bg from './img/bg.png'
 import data from './data.js';
 import { Routes, Route, Link, HashRouter, useNavigate, Outlet} from 'react-router-dom'
 import Detail from './Detail.js';
+import MyPage from './MyPage.js';
 import axios from 'axios'
 
 export let Context1 = createContext()
@@ -28,7 +29,8 @@ function App() {
             {/* <Link to="/" style={{textDecoration:"none", marginLeft:20}}>홈</Link>
             <Link to="/detail" style={{textDecoration:"none", marginLeft:40}}>상세페이지</Link> */}
             <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/detail')}}>Cart</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail')}}>Detail</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/mypage')}}>My Page</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -59,6 +61,7 @@ function App() {
           } />
         {/* 404 페이지 */}
         <Route path="*" element={<div>없는 페이지요</div>} />
+        <Route path="/mypage" element={<MyPage></MyPage>}/>
 
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>멤버임</div>} /> {/* 어디에 보여줄지 정하기 위해 <Outlet></Outlet>사용 */}
