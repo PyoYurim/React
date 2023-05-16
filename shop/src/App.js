@@ -1,16 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { createContext } from 'react';
 import { useState } from "react";
 import { Button, Navbar, Container, Nav } from 'react-bootstrap'
 import bg from './img/bg.png'
 import data from './data.js';
 import { Routes, Route, Link, HashRouter, useNavigate, Outlet} from 'react-router-dom'
 import Detail from './Detail.js';
+import axios from 'axios'
+
+export let Context1 = createContext()
 
 function App() {
 
   let [shoes, setShoes] = useState(data)
+  let [재고] = useState([10, 11, 12])
+
   let navigate = useNavigate();
 
   return (
@@ -37,10 +43,20 @@ function App() {
                   })}
                 </div>
               </div>
+              <button onClick={()=>{
+                axios.get('https://codingapple1.github.io/shop/data2.json')
+                .then((결과)=>{ 
+                  setShoes(shoes.concat(결과.data)) 
+                })
+              }}>버튼</button>
             </>
           }/>
           
-          <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+          <Route path="/detail/:id" element={
+            <Context1.Provider value={{ 재고, shoes }}>
+              <Detail shoes={shoes} />
+            </Context1.Provider>
+          } />
         {/* 404 페이지 */}
         <Route path="*" element={<div>없는 페이지요</div>} />
 
@@ -54,6 +70,7 @@ function App() {
           <Route path="two" element={<p>생일기념 쿠폰받기</p>} />
         </Route>
       </Routes>
+
     </div>
   );
 }
