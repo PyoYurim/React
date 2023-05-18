@@ -51,7 +51,21 @@ div {
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.start{
+  background-image: url('./img/한교동2.png');
+  background-position: center;
+  transform:scale(0);
+  width : 800px;
+  height: 800px;
+}
+.startend {
+  background-image: url('./img/한교동2.png');
+  background-position: center;
+  transform:scale(1);
+  transition: all 1s;
+  width : 1000px;
+  height: 560px;
+}
 .App-link {
   color: #61dafb;
 }

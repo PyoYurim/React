@@ -4,8 +4,9 @@ import { Button, Navbar, Container, Nav } from 'react-bootstrap'
 import { Routes, Route, Link, HashRouter, useNavigate, Outlet} from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Write from './Write.js';
+import Detail from './Detail.js';
 
 function App() {
   let navigate = useNavigate();
@@ -32,7 +33,7 @@ function App() {
             </>
           }/>
           <Route path="/Read" element={<Read/>}></Route>
-          <Route path="/Detail" element={<div>더 자세하게!!</div>}/>
+          <Route path="/Detail" element={<Detail></Detail>}/>
           <Route path="/Write" element={<Write/>}/>
         </Routes>
     </div>
@@ -43,13 +44,23 @@ function App() {
 
 function Read() {
   let navigate = useNavigate();
+  let [fade, setFade] = useState('');
+
+  useEffect(()=>{
+    setTimeout(()=> {
+      setFade('end');
+    }, 500);
+
+    return() => {
+      setFade('');
+    }
+  })
   return (
-    <div>
-    <h4>읽기 페이지입니다.</h4>
-    
-    <Button onClick= {()=>navigate('/detail')}>자세히보기</Button>
+    <div className={'start' + fade}>
+      <h4>읽기 페이지입니다.</h4>
+      <Button onClick= {()=>navigate('/detail')}>자세히보기</Button>
     </div>
-  )
+  );
 }
 
 export default App;
