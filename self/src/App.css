@@ -54,6 +54,7 @@ div {
 .start{
   background-image: url('./img/한교동2.png');
   background-position: center;
+  margin-top: 100px;
   transform:scale(0);
   width : 800px;
   height: 800px;
@@ -61,6 +62,7 @@ div {
 .startend {
   background-image: url('./img/한교동2.png');
   background-position: center;
+  margin-top: 100px;
   transform:scale(1);
   transition: all 1s;
   width : 1000px;

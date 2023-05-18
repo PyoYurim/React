@@ -49,14 +49,16 @@ function Read() {
   useEffect(()=>{
     setTimeout(()=> {
       setFade('end');
-    }, 500);
-
-    return() => {
-      setFade('');
-    }
+    }, 100);
+    //이게 별로 필요없을거 같아서 뺐는데 실행됐어요!
+    // return() => {
+    //   setFade('');    
+    // }
   })
+  
   return (
-    <div className={'start' + fade}>
+    <div>
+      <div className={'start' + fade}/>
       <h4>읽기 페이지입니다.</h4>
       <Button onClick= {()=>navigate('/detail')}>자세히보기</Button>
     </div>
