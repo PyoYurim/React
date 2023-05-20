@@ -10,6 +10,7 @@ import { Routes, Route, Link, HashRouter, useNavigate, Outlet} from 'react-route
 import Detail from './Detail.js';
 import MyPage from './MyPage.js';
 import axios from 'axios'
+import Cart from './routes/Cart.js'
 
 export let Context1 = createContext()
 
@@ -65,6 +66,7 @@ function App() {
               <Detail shoes={shoes} />
             </Context1.Provider>
           } />
+          <Route path="/cart" element={<Cart/>}/>
         {/* 404 페이지 */}
         <Route path="*" element={<div>없는 페이지요</div>} />
         <Route path="/mypage" element={<MyPage></MyPage>}/>
