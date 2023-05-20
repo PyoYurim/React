@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from 'react-bootstrap'
-
 import {Context1} from './App.js'
 // import styled from "styled-components";
+import {addItem} from "./store.js";
+import { useDispatch } from "react-redux";
 
 //YelloBtn을 갖다쓸때 bg를 props로 써주겠다
 // let YellowBtn = styled.button`
@@ -18,7 +19,7 @@ import {Context1} from './App.js'
 function Detail(props) {
 
   let { 재고 } = useContext(Context1);
-
+  let dispatch = useDispatch()
   const [num, setNum] = useState('');
   const [alert1, setAlert1] = useState(true);
   let [탭, 탭변경] = useState(0);
@@ -60,7 +61,9 @@ function Detail(props) {
           <h4 className="pt-5">{찾은상품.title}</h4>
           <p>{찾은상품.content}</p>
           <p>{찾은상품.price}원</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button className="btn btn-danger" onClick={()=>{
+            dispatch(addItem({id : 1, name : 'Grey Yordan', count : 1}))
+          }}>주문하기</button>
         </div>
       </div>
       

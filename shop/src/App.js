@@ -33,7 +33,7 @@ function App() {
             {/* Nav를 이용하여 스타일 지정 */}
             <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
             {/* Detail클릭 시 /detail경로로 이동하게 해주는거 */}
-            <Nav.Link onClick={()=>{navigate('/detail')}}>Detail</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/cart')}}>Cart</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/mypage')}}>My Page</Nav.Link>
           </Nav>
         </Container>
@@ -110,7 +110,7 @@ function About(){
 function Card (props) {
   return(
     <div className="col-md-4">
-      <img src={'https://codingapple1.github.io/shop/shoes' + (props.i+1) + '.jpg'} width="80%"></img>
+      <img src={'https://codingapple1.github.io/shop/shoes' + (props.index+1) + '.jpg'} width="80%"></img>
       <h4>{props.shoes.title}</h4>
       <p>{props.shoes.price}</p>
     </div>
