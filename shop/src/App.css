@@ -11,9 +11,6 @@
   transition: all 0.5s;
   
 }
-.ms-auto {
-  text-decoration-color: white;
-}
 .modal {
   position: center;
   z-index: 9999;
