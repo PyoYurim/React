@@ -2,24 +2,46 @@ import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createContext } from 'react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Navbar, Container, Nav } from 'react-bootstrap'
 import bg from './img/bg.png'
 import data from './data.js';
-import { Routes, Route, Link, HashRouter, useNavigate, Outlet} from 'react-router-dom'
+import { Routes, Route, Link, HashRouter, useNavigate, Outlet, useParams, NavLink } from 'react-router-dom'
 import Detail from './Detail.js';
 import MyPage from './MyPage.js';
 import axios from 'axios'
 import Cart from './routes/Cart.js'
+import { useQuery } from 'react-query';
 
 export let Context1 = createContext()
 
 function App() {
+
+  useEffect(()=>{
+    localStorage.setItem('watched', JSON.stringify([]))
+    
+  }, [])
+
   //data.js에서 정보 가져오기
   let [shoes, setShoes] = useState(data)
   let [재고] = useState([10, 11, 12])
-
+  let param = useParams();
   let navigate = useNavigate();
+  //object자료 만들기
+  let obj = {name: 'kim'}
+  //JSON으로 변환
+  //localStorage에 저장
+  localStorage.setItem('data', JSON.stringify(obj))
+
+  let result = useQuery('작명', ()=>
+    axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{
+      console.log('요청됨')
+      return a.data
+    })
+  )
+
+  
+
 
   return (
     <div className="App">
@@ -35,6 +57,9 @@ function App() {
             {/* Detail클릭 시 /detail경로로 이동하게 해주는거 */}
             <Nav.Link onClick={()=>{navigate('/cart')}}>Cart</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/mypage')}}>My Page</Nav.Link>
+          </Nav>
+          <Nav className="ms-auto">
+            { result.isLoading ? '로딩중' : result.data.name }
           </Nav>
         </Container>
       </Navbar>
@@ -106,13 +131,13 @@ function About(){
 }
 
 
-
 function Card (props) {
   return(
-    <div className="col-md-4">
-      <img src={'https://codingapple1.github.io/shop/shoes' + (props.index+1) + '.jpg'} width="80%"></img>
-      <h4>{props.shoes.title}</h4>
-      <p>{props.shoes.price}</p>
+    <div className="col-md-4" key ={props.i}>
+      <NavLink to = {"/detail/"+(props.i)}>
+        <img src={'https://codingapple1.github.io/shop/shoes' + (props.i+1) + '.jpg'} width="80%"></img></NavLink>
+        <h4>{props.shoes.title}</h4>
+        <p>{props.shoes.price}</p>
     </div>
   )
 }

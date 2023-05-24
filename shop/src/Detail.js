@@ -5,6 +5,7 @@ import {Context1} from './App.js'
 // import styled from "styled-components";
 import {addItem} from "./store.js";
 import { useDispatch } from "react-redux";
+import "./App.css";
 
 //YelloBtn을 갖다쓸때 bg를 props로 써주겠다
 // let YellowBtn = styled.button`
@@ -17,7 +18,7 @@ import { useDispatch } from "react-redux";
 
 
 function Detail(props) {
-
+  const zIndex = 30
   let { 재고 } = useContext(Context1);
   let dispatch = useDispatch()
   const [num, setNum] = useState('');
@@ -29,6 +30,19 @@ function Detail(props) {
   const 찾은상품 = props.shoes.find(function (x) {
     return x.id == id;
   });
+
+  useEffect(()=>{
+    //이미 만들어놓았기 떄문에 setItem을 이용해 새로 만들기 보다는 먼저 꺼내준다
+    let 꺼낸거 = localStorage.getItem('watched')
+    꺼낸거 = JSON.parse(꺼낸거)
+    꺼낸거.push(찾은상품.id)
+    꺼낸거 = new Set(꺼낸거)
+    꺼낸거 = Array.from(꺼낸거)
+    localStorage.setItem('watched', JSON.stringify(꺼낸거))
+  },[])
+
+
+  let [modal, setModal] = useState(false);
   //useEffect()훅을 사용하여 num변수의 변경 감지, 이에 따른 다양한 동작 수행
   useEffect(() => {
   //2초 후에 실행되는 타임아웃 설정, 2초 후에 setAlter1(false)를 호출하여 alert1 상태 변경
@@ -53,8 +67,13 @@ function Detail(props) {
       <button onClick={() => setCount(count + 1)}>버튼</button>
       <div className="row">
         <div className="col-md-6">
-          <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" alt="shoes" />
+                  
+        <img src= {'https://codingapple1.github.io/shop/shoes' + (찾은상품.id+1) + '.jpg'} onClick={()=> {setModal(true)}} width="100%" alt="shoes"/>
+        {
+          modal === true ? <Modal setModal = {setModal} id={찾은상품.id}></Modal>: null
+        }       
         </div>
+        <br></br>
         <div className="col-md-6">
           {/* 사용자의 입력을 실시간으로 감지하고 상태 업데이트 */}
           <input onChange={(e) => setNum(e.target.value)} />
@@ -102,6 +121,16 @@ function TabContent({ 탭 }) {
     <div className={'start' + fade}>
       {/* 배열을 사용하여 탭 값에 따라 내용을 렌더링하는 부분 배열의 인데스에 탭 값을 넣어 해당하는 내용 선택, 에를 들어 탭 값이 0이면 첫번째 내용0이 렌더링된다 */}
       {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][탭]}
+    </div>
+  );
+}
+
+function Modal(props) {
+  return (
+    //display : block 붙이니까 모달창이 정상적으로 뜬다!
+    <div className="modal" style={{ display: 'block', width:"500px", height:"350px"}}>
+      <img src= {'https://codingapple1.github.io/shop/shoes' + (props.id+1) + '.jpg'} style={{width:"50%"}} />
+      <button onClick={() => props.setModal(false)}>닫기</button>
     </div>
   );
 }
