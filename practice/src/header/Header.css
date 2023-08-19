@@ -1,0 +1,21 @@
+.logo {
+    font-family: 'Times New Roman', Times, serif ;
+    padding-left: 18px;
+    padding-top: 25px;
+    font-size: 25px;
+    color: black;
+}
+
+.header {
+    display: flex;
+    
+    
+}
+.menu {
+    display: flex;
+    padding-top: 15px;
+    padding-left: 25px;
+    font-size: 20px;
+    color: black;
+}
+

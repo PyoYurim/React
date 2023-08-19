@@ -1,0 +1,10 @@
+.name {
+    margin-top: 30px;
+}
+.join-form {
+    display: flex;
+    flex-direction: column; 
+    margin: 0 auto;
+    width: 300px;
+    
+  }

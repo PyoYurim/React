@@ -1,0 +1,15 @@
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1250px;
+    text-align: center;
+    
+}
+
+/* 이미지 컨테이너에 스타일을 적용합니다. */
+.row img {
+    max-width: 250px;
+    margin-top: 20px;
+    padding: 30px;
+    margin: 0 auto;
+}
